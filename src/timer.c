@@ -39,8 +39,8 @@ void pause_timer(Timer_t* timer) {
 void draw_pause(int maxX, int maxY) {
 
     const char * (*ascii_pause)[14] = ascii_art_pause;
-    int middle_y = maxY / 2 - ((double)(0.5) * sizeof(ascii_pause));
-    int middle_x = maxX / 2 - ((double)(0.5) * strlen(ascii_pause[1]));
+    int middle_y = maxY / 2 - ((double)(0.5) * sizeof(ascii_pause)) - 3;
+    int middle_x = maxX / 2 - ((double)(0.5) * strlen(ascii_pause[1])) - 8;
     move(middle_y, middle_x); 
     
     int i;
@@ -57,6 +57,7 @@ void draw_pause(int maxX, int maxY) {
 void resume_timer(Timer_t* timer) {
     timer->is_paused = false;
     timer->is_resumed = true;
+    clear();
 }
 
  void get_time (Timer_t* timer) {
@@ -106,6 +107,12 @@ void timer_destroy(Timer_t* self) {
 }
 
 void draw_time(Timer_t* self, int maxX, int maxY) {
+    /* Draws the time to the screen 
+    
+    param maxX: the width of the screen
+    param maxY: the height of the screen
+
+    */
     if (self == NULL) {
         return; 
     }

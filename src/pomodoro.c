@@ -9,7 +9,6 @@
 #include <pthread.h>
 
 int maxY, maxX;
-pthread_mutex_t mutex;  // Mutex to protect shared data
 
 Preferences_t* get_preferences() {
     Preferences_t* preferences = (Preferences_t*) malloc(sizeof(Preferences_t));
@@ -116,6 +115,9 @@ int main() {
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
     cbreak();
+    getmaxyx(stdscr, maxY, maxX);
+    int maxY_new;
+    int maxX_new;
     // raw();
 
 
@@ -137,7 +139,12 @@ int main() {
 
     
         // clear();
-        getmaxyx(stdscr, maxY, maxX);
+        getmaxyx(stdscr, maxY_new, maxX_new);
+        if (maxX_new != maxX || maxY_new != maxY) {
+            clear();
+            maxX = maxX_new;
+            maxY = maxY_new;
+        }
                 ch = getch();
         if (ch == 'q' || ch == 'Q') {
             break;
